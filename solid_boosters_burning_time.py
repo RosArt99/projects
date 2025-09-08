@@ -1,20 +1,26 @@
-looper = True
-while looper:
-    try:
-        big_booster_total_fuel = int(input("Enter big booster total fuel: "))
-        small_booster_total_fuel = int(input("Enter small booster total fuel: "))
-        big_booster_fuel_consumption = float(input("Enter big booster fuel consumption: "))
-        small_booster_fuel_consumption = float(input("Enter small booster fuel consumption: "))
-        boosters_burning_time = float(input("Enter boosters burning time: "))
-        if big_booster_total_fuel <= 0 or small_booster_total_fuel <= 0 or big_booster_fuel_consumption <= 0 or small_booster_fuel_consumption <= 0 or boosters_burning_time <= 0:
-            raise TypeError
-    except ValueError:
-        print("Invalid input. Please enter numeric values.")
-    except TypeError:
-        print("All values must be greater than zero. Please try again.")
-    else:
-        big_booster_thrust_limiter_coeff = big_booster_total_fuel / (boosters_burning_time * big_booster_fuel_consumption)
-        small_booster_thrust_limiter_coeff = small_booster_total_fuel / (boosters_burning_time * small_booster_fuel_consumption)
-        print(f"Big booster thrust limiter is set to {big_booster_thrust_limiter_coeff:.3f}")
-        print(f"Small booster thrust limiter is set to {small_booster_thrust_limiter_coeff:.3f}")
-        looper = False
+def get_positive_number(prompt: str, num_type: float):
+    while True:
+        try:
+            value = num_type(input(prompt))
+            if value <= 0:
+                print("Value must be greater than zero. Please try again.")
+                continue
+            return value
+        except ValueError:
+            print("Invalid input. Please enter a numeric value.")
+
+def main():
+    big_booster_total_fuel = get_positive_number("Enter big booster total fuel: ", int)
+    small_booster_total_fuel = get_positive_number("Enter small booster total fuel: ", int)
+    big_booster_fuel_consumption = get_positive_number("Enter big booster fuel consumption: ", float)
+    small_booster_fuel_consumption = get_positive_number("Enter small booster fuel consumption: ", float)
+    boosters_burning_time = get_positive_number("Enter boosters burning time: ", float)
+
+    big_booster_thrust_limiter_coeff = big_booster_total_fuel / (boosters_burning_time * big_booster_fuel_consumption)
+    small_booster_thrust_limiter_coeff = small_booster_total_fuel / (boosters_burning_time * small_booster_fuel_consumption)
+
+    print(f"Big booster thrust limiter is set to {big_booster_thrust_limiter_coeff:.3f}")
+    print(f"Small booster thrust limiter is set to {small_booster_thrust_limiter_coeff:.3f}")
+
+if __name__ == "__main__":
+    main()
